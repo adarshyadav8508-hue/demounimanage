@@ -1,0 +1,1796 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unimanage Technologies - Gym Management & Web Development</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@700;800&display=swap');
+
+        :root {
+            --primary: #2C3CFF;
+            --secondary: #3b82f6;
+            --accent: #10b981;
+            --dark: #1e293b;
+            --light: #f8fafc;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--dark);
+        }
+
+        .font-display {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .gradient-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, #2C3CFF 100%);
+        }
+
+        .gradient-secondary {
+            background: linear-gradient(135deg, var(--secondary) 0%, #60a5fa 100%);
+        }
+
+        .gradient-accent {
+            background: linear-gradient(135deg, var(--accent) 0%, #34d399 100%);
+        }
+
+        .gradient-text-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, #ff8c42 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .gradient-text-secondary {
+            background: linear-gradient(135deg, var(--secondary) 0%, #60a5fa 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-pattern {
+            background-image:
+                radial-gradient(circle at 20% 80%, rgba(255, 107, 0, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(16, 185, 129, 0.05) 0%, transparent 50%);
+        }
+
+        .card-hover {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .card-hover:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, #ff8c42 100%);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            transition: left 0.3s ease;
+        }
+
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, var(--secondary) 0%, #60a5fa 100%);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-secondary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            transition: left 0.3s ease;
+        }
+
+        .btn-secondary:hover::before {
+            left: 100%;
+        }
+
+        .feature-icon {
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover .feature-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .tab-active {
+            border-bottom: 3px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .portfolio-item {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .portfolio-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .portfolio-item:hover .portfolio-overlay {
+            opacity: 1;
+        }
+
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+            0% {
+                transform: translate(0, 0px);
+            }
+
+            50% {
+                transform: translate(0, -20px);
+            }
+
+            100% {
+                transform: translate(0, -0px);
+            }
+        }
+
+        /* Mobile Navigation - FIXED */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 80%;
+            height: 100vh;
+            background: white;
+            z-index: 1000;
+            transition: right 0.3s ease;
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .mobile-menu.active {
+            right: 0;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            display: none;
+        }
+
+        .overlay.active {
+            display: block;
+        }
+
+        /* FIX: Remove space below menu bar on mobile */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 50;
+            background: white;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+        }
+
+        /* FIX: Center navigation text in mobile menu */
+        .mobile-menu nav {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .mobile-menu nav a {
+            width: 100%;
+            text-align: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #f3f4f6;
+        }
+
+        /* Responsive improvements */
+        @media (max-width: 768px) {
+            .container {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+
+            .hero-pattern {
+                padding-top: 100px;
+                padding-bottom: 60px;
+            }
+
+            .text-5xl,
+            .text-6xl {
+                font-size: 2.5rem;
+                line-height: 1.2;
+            }
+
+            .flex.justify-center.mb-12 .inline-flex {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .flex.justify-center.mb-12 .inline-flex button {
+                width: 100%;
+                margin-bottom: 5px;
+            }
+
+            .grid-cols-3 {
+                grid-template-columns: 1fr;
+            }
+
+            .transform.scale-105 {
+                transform: none;
+            }
+
+            /* FIX: Ensure no extra space below header */
+            #home {
+                padding-top: 80px;
+                align-items: flex-start;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .text-4xl {
+                font-size: 2rem;
+            }
+
+            .text-xl {
+                font-size: 1.1rem;
+            }
+
+            .p-8 {
+                padding: 1.5rem;
+            }
+
+            .space-y-8>*+* {
+                margin-top: 1.5rem;
+            }
+
+            .grid.grid-cols-2.gap-6 {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* WhatsApp Floating Button */
+        .whatsapp-float {
+            position: fixed;
+            width: 60px;
+            height: 60px;
+            bottom: 40px;
+            right: 40px;
+            background-color: #25d366;
+            color: #FFF;
+            border-radius: 50px;
+            text-align: center;
+            font-size: 30px;
+            box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.4);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .whatsapp-float:hover {
+            background-color: #128C7E;
+            transform: scale(1.1);
+        }
+
+        .whatsapp-icon {
+            color: white;
+        }
+
+        /* WhatsApp button responsive adjustments */
+        @media (max-width: 768px) {
+            .whatsapp-float {
+                width: 50px;
+                height: 50px;
+                bottom: 20px;
+                right: 20px;
+                font-size: 24px;
+            }
+        }
+
+        /* Form submission styles */
+        .form-message {
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .success-message {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .error-message {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        /* MOST POPULAR badge responsive fix */
+        .popular-badge {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #fbbf24;
+            color: #7c2d12;
+            padding: 4px 12px;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            white-space: nowrap;
+            z-index: 10;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        @media (max-width: 768px) {
+            .popular-badge {
+                top: -10px;
+                padding: 3px 10px;
+                font-size: 0.65rem;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .popular-badge {
+                top: -8px;
+                padding: 2px 8px;
+                font-size: 0.6rem;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-white">
+    <div style="overflow-x: hidden;">
+
+        <div class="overlay" id="overlay"></div>
+
+        <div class="mobile-menu" id="mobileMenu">
+            <div class="flex justify-between items-center mb-8">
+
+                <button id="closeMenu" class="text-gray-700">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+
+            <nav class="flex flex-col space-y-6">
+                <a href="#index"
+                    class="text-gray-700 hover:text-primary font-medium transition text-lg py-2 border-b border-gray-100">Home</a>
+                <a href="#about"
+                    class="text-gray-700 hover:text-primary font-medium transition text-lg py-2 border-b border-gray-100">About</a>
+                <a href="#gym-software"
+                    class="text-gray-700 hover:text-primary font-medium transition text-lg py-2 border-b border-gray-100">Gym
+                    Software</a>
+                <a href="#web-services"
+                    class="text-gray-700 hover:text-primary font-medium transition text-lg py-2 border-b border-gray-100">Web
+                    Services</a>
+                <a href="#portfolio"
+                    class="text-gray-700 hover:text-primary font-medium transition text-lg py-2 border-b border-gray-100">Portfolio</a>
+                <a href="#contact"
+                    class="btn-primary text-white px-6 py-3 rounded-lg font-semibold text-center">Contact</a>
+            </nav>
+        </div>
+
+        <header class="fixed top-0 w-full z-50 bg-white shadow-sm">
+            <div class="container mx-auto px-4 sm:px-6 py-4">
+                <div class="flex justify-between items-center">
+                    <div class="flex items-center space-x-0">
+                        <div class="w-10 h-10 sm:w-12 sm:h-12">
+                            <img src="./gymicon.png" alt="Unimanage Technologies">
+                        </div>
+                        <div>
+                            <span class="text-xl sm:text-2xl font-bold gradient-text-primary">Unimanage</span>
+                            <p class="text-xs text-gray-500 -mt-1">Technologies</p>
+                        </div>
+                    </div>
+
+                    <nav class="hidden lg:flex items-center space-x-8">
+                        <a href="#home" class="text-gray-700 hover:text-primary font-medium transition">Home</a>
+                        <a href="#about" class="text-gray-700 hover:text-primary font-medium transition">About</a>
+                        <a href="#gym-software" class="text-gray-700 hover:text-primary font-medium transition">Gym
+                            Software</a>
+                        <a href="#web-services" class="text-gray-700 hover:text-primary font-medium transition">Web
+                            Services</a>
+                        <a href="#portfolio"
+                            class="text-gray-700 hover:text-primary font-medium transition">Portfolio</a>
+                    </nav>
+
+                    <div class="flex items-center space-x-4">
+                        <!-- Changed from sm:block to lg:block to hide on tablets -->
+                        <button
+                            class="hidden lg:block btn-primary text-white px-4 sm:px-6 py-2 rounded-lg font-semibold hover:shadow-lg">
+                            <a href="#contact">Contact</a>
+                        </button>
+                        <a id="openMenu" class="lg:hidden text-gray">
+                            <i class="fas fa-bars text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <section id="home" class="relative min-h-screen flex items-center hero-pattern pt-16">
+            <div class="container mx-auto px-4 sm:px-6 relative z-10">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+                    <div class="space-y-6 lg:space-y-8" data-aos="fade-right">
+                        <div
+                            class="inline-flex items-center bg-orange-100 text-orange-800 px-4 py-2 rounded-full text-sm font-medium">
+                            <i class="fas fa-fire mr-2"></i>
+                            Powering 500+ Fitness Businesses
+                        </div>
+
+                        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-display font-bold leading-tight">
+                            Transform Your <span class="gradient-text-primary">Fitness Business</span> & <span
+                                class="gradient-text-secondary">Digital Presence</span>
+                        </h1>
+
+                        <p class="text-lg sm:text-xl text-gray-600 leading-relaxed max-w-xl">
+                            All-in-one gym management software and professional web development services to grow your
+                            fitness business and establish a powerful online presence.
+                        </p>
+
+                        <div class="flex flex-col sm:flex-row gap-4 pt-4">
+                            <button
+                                class="btn-primary text-white px-6 py-3 sm:px-8 sm:py-4 rounded-xl font-semibold text-lg hover:shadow-xl flex items-center justify-center">
+                                <i class="fas fa-play-circle mr-2"></i>
+                                Watch Demo
+                            </button>
+                            <button
+                                class="btn-secondary text-white px-6 py-3 sm:px-8 sm:py-4 rounded-xl font-semibold text-lg hover:shadow-xl flex items-center justify-center">
+                                <i class="fas fa-calendar-alt mr-2"></i>
+                                <a href="#contact">Free Consultation</a>
+                            </button>
+                        </div>
+
+                        <div class="flex items-center space-x-4 sm:space-x-8 pt-6">
+                            <div class="text-center">
+                                <div class="text-2xl sm:text-3xl font-bold gradient-text-primary">85%</div>
+                                <div class="text-sm text-gray-600">Time Saved</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-2xl sm:text-3xl font-bold gradient-text-secondary">40%</div>
+                                <div class="text-sm text-gray-600">Revenue Growth</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-2xl sm:text-3xl font-bold gradient-text-primary">24/7</div>
+                                <div class="text-sm text-gray-600">Support</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="relative mt-8 lg:mt-0" data-aos="fade-left">
+                        <div class="floating">
+                            <div
+                                class="absolute -top-10 -left-10 w-48 h-48 sm:w-72 sm:h-72 bg-orange-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-pulse">
+                            </div>
+                            <div
+                                class="absolute -bottom-10 -right-10 w-48 h-48 sm:w-72 sm:h-72 bg-blue-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-pulse">
+                            </div>
+                        </div>
+                        <div class="relative bg-white rounded-3xl shadow-2xl p-2">
+                            <div class="flex items-center justify-between mb-2 px-4 pt-4">
+                                <h3 class="text-lg sm:text-xl font-semibold">Dashboard Preview</h3>
+                                <div class="flex space-x-2">
+                                    <div class="w-3 h-3 bg-red-400 rounded-full"></div>
+                                    <div class="w-3 h-3 bg-yellow-400 rounded-full"></div>
+                                    <div class="w-3 h-3 bg-green-400 rounded-full"></div>
+                                </div>
+                            </div>
+                            <img src="./Dashboard.png" alt="Gym Management Dashboard" class="rounded-2xl w-full">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="py-16 lg:py-24 bg-gray-50">
+            <div class="container mx-auto px-4 sm:px-6">
+                <div class="text-center max-w-3xl mx-auto mb-12 lg:mb-16" data-aos="fade-up">
+                    <h2 class="text-3xl sm:text-4xl lg:text-5xl font-display font-bold mb-4 lg:mb-6">
+                        About <span class="gradient-text-primary">Unimanage Technologies</span>
+                    </h2>
+                    <p class="text-lg sm:text-xl text-gray-600">
+                        Empowering fitness businesses with cutting-edge technology solutions
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+                    <div data-aos="fade-right">
+                        <h3 class="text-2xl sm:text-3xl font-bold mb-4 lg:mb-6">Our Mission</h3>
+                        <p class="text-gray-600 mb-4 lg:mb-6">
+                            We're dedicated to providing fitness businesses with the tools they need to thrive in the
+                            digital age. Our comprehensive gym management software streamlines operations while our web
+                            development services create powerful online presences that attract and retain members.
+                        </p>
+                        <p class="text-gray-600 mb-6 lg:mb-8">
+                            With over a decade of experience in both fitness management and web technologies, we
+                            understand
+                            the unique challenges faced by gym owners and fitness professionals. Our solutions are
+                            designed
+                            to save time, increase revenue, and enhance member experiences.
+                        </p>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 lg:gap-6">
+                            <div class="bg-white p-4 lg:p-6 rounded-xl shadow-md">
+                                <div class="text-3xl lg:text-4xl font-bold gradient-text-primary mb-2">500+</div>
+                                <div class="text-gray-600">Happy Clients</div>
+                            </div>
+                            <div class="bg-white p-4 lg:p-6 rounded-xl shadow-md">
+                                <div class="text-3xl lg:text-4xl font-bold gradient-text-secondary mb-2">10+</div>
+                                <div class="text-gray-600">Years Experience</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 lg:gap-6" data-aos="fade-left">
+                        <div class="bg-gradient-to-br from-orange-50 to-orange-100 p-6 lg:p-8 rounded-2xl">
+                            <div
+                                class="w-12 h-12 lg:w-16 lg:h-16 gradient-primary rounded-2xl flex items-center justify-center mb-4 lg:mb-6">
+                                <i class="fas fa-dumbbell text-white text-xl lg:text-2xl"></i>
+                            </div>
+                            <h4 class="text-lg lg:text-xl font-bold mb-2 lg:mb-3">Gym Management</h4>
+                            <p class="text-gray-600 text-sm lg:text-base">Comprehensive software to manage memberships,
+                                classes, trainers, and
+                                billing.</p>
+                        </div>
+
+                        <div class="bg-gradient-to-br from-blue-50 to-blue-100 p-6 lg:p-8 rounded-2xl">
+                            <div
+                                class="w-12 h-12 lg:w-16 lg:h-16 gradient-secondary rounded-2xl flex items-center justify-center mb-4 lg:mb-6">
+                                <i class="fas fa-laptop-code text-white text-xl lg:text-2xl"></i>
+                            </div>
+                            <h4 class="text-lg lg:text-xl font-bold mb-2 lg:mb-3">Web Development</h4>
+                            <p class="text-gray-600 text-sm lg:text-base">Professional websites and web applications
+                                tailored to your brand.</p>
+                        </div>
+
+                        <div class="bg-gradient-to-br from-green-50 to-green-100 p-6 lg:p-8 rounded-2xl">
+                            <div
+                                class="w-12 h-12 lg:w-16 lg:h-16 gradient-accent rounded-2xl flex items-center justify-center mb-4 lg:mb-6">
+                                <i class="fas fa-mobile-alt text-white text-xl lg:text-2xl"></i>
+                            </div>
+                            <h4 class="text-lg lg:text-xl font-bold mb-2 lg:mb-3">Mobile Apps</h4>
+                            <p class="text-gray-600 text-sm lg:text-base">Custom mobile applications for member
+                                engagement and management.</p>
+                        </div>
+
+                        <div class="bg-gradient-to-br from-purple-50 to-purple-100 p-6 lg:p-8 rounded-2xl">
+                            <div
+                                class="w-12 h-12 lg:w-16 lg:h-16 bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl flex items-center justify-center mb-4 lg:mb-6">
+                                <i class="fas fa-chart-line text-white text-xl lg:text-2xl"></i>
+                            </div>
+                            <h4 class="text-lg lg:text-xl font-bold mb-2 lg:mb-3">Analytics</h4>
+                            <p class="text-gray-600 text-sm lg:text-base">Data-driven insights to optimize your business
+                                performance.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="gym-software" class="py-16 lg:py-24 bg-white">
+            <div class="container mx-auto px-4 sm:px-6">
+                <div class="text-center max-w-3xl mx-auto mb-12 lg:mb-16" data-aos="fade-up">
+                    <h2 class="text-3xl sm:text-4xl lg:text-5xl font-display font-bold mb-4 lg:mb-6">
+                        Gym Management <span class="gradient-text-primary">Software</span>
+                    </h2>
+                    <p class="text-lg sm:text-xl text-gray-600">
+                        All-in-one solution to streamline your fitness business operations
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+                    <div class="feature-card bg-white p-6 lg:p-8 rounded-2xl shadow-lg card-hover" data-aos="fade-up"
+                        data-aos-delay="100">
+                        <div
+                            class="feature-icon w-12 h-12 lg:w-16 lg:h-16 gradient-primary rounded-2xl flex items-center justify-center mb-4 lg:mb-6 shadow-lg">
+                            <i class="fas fa-users text-white text-xl lg:text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl lg:text-2xl font-semibold mb-3 lg:mb-4">Member Management</h3>
+                        <p class="text-gray-600 mb-4 lg:mb-6 text-sm lg:text-base">Effortlessly manage member profiles,
+                            attendance, and communication
+                            with our intuitive member portal.</p>
+                        <ul class="space-y-2 text-sm text-gray-600">
+                            <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i>Member
+                                profiles & photos</li>
+                            <li class="flex items-center"><i
+                                    class="fas fa-check-circle text-green-500 mr-2"></i>Attendance
+                                tracking</li>
+                            <li class="flex items-center"><i
+                                    class="fas fa-check-circle text-green-500 mr-2"></i>Automated
+                                reminders</li>
+                        </ul>
+                    </div>
+
+                    <div class="feature-card bg-white p-6 lg:p-8 rounded-2xl shadow-lg card-hover" data-aos="fade-up"
+                        data-aos-delay="200">
+                        <div
+                            class="feature-icon w-12 h-12 lg:w-16 lg:h-16 gradient-primary rounded-2xl flex items-center justify-center mb-4 lg:mb-6 shadow-lg">
+                            <i class="fas fa-chart-line text-white text-xl lg:text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl lg:text-2xl font-semibold mb-3 lg:mb-4">Revenue Dashboard</h3>
+                        <p class="text-gray-600 mb-4 lg:mb-6 text-sm lg:text-base">Track earnings, monitor growth
+                            trends, and get insights into your
+                            business performance in real-time.</p>
+                        <ul class="space-y-2 text-sm text-gray-600">
+                            <li class="flex items-center"><i
+                                    class="fas fa-check-circle text-green-500 mr-2"></i>Real-time
+                                revenue tracking</li>
+                            <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i>Monthly
+                                &
+                                yearly reports</li>
+                            <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i>Visual
+                                charts & analytics</li>
+                        </ul>
+                    </div>
+                    <div class="feature-card bg-white p-8 rounded-2xl shadow-lg card-hover" data-aos="fade-up"
+                        data-aos-delay="300">
+                        <div
+                            class="feature-icon w-16 h-16 gradient-primary rounded-2xl flex items-center justify-center mb-6 shadow-lg">
+                            <i class="fas fa-credit-card text-white text-2xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-semibold mb-4">Billing & Payments</h3>
+                        <p class="text-gray-600 mb-6">Automate billing, process payments, and manage memberships with
+                            our
+                            secure payment system.</p>
+                        <ul class="space-y-2 text-sm text-gray-600">
+                            <li class="flex items-center"><i
+                                    class="fas fa-check-circle text-green-500 mr-2"></i>Recurring
+                                billing</li>
+                            <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i>Payment
+                                processing</li>
+                            <li class="flex items-center"><i
+                                    class="fas fa-check-circle text-green-500 mr-2"></i>Financial
+                                reports</li>
+                        </ul>
+                    </div>
+                    <div class="feature-card bg-white p-8 rounded-2xl shadow-lg card-hover" data-aos="fade-up"
+                        data-aos-delay="400">
+                        <div
+                            class="feature-icon w-16 h-16 gradient-primary rounded-2xl flex items-center justify-center mb-6 shadow-lg">
+                            <i class="fas fa-calendar-check text-white text-2xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-semibold mb-4">Trainer Scheduling</h3>
+                        <p class="text-gray-600 mb-6">Schedule personal training sessions and group classes with ease.
+                        </p>
+                        <ul class="space-y-2 text-sm text-gray-600">
+                            <li class="flex items-center"><i
+                                    class="fas fa-check-circle text-green-500 mr-2"></i>Personal
+                                training sessions</li>
+                            <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i>Group
+                                class
+                                scheduling</li>
+                            <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i>Trainer
+                                availability management</li>
+                        </ul>
+                    </div>
+
+
+                    <div class="feature-card bg-white p-8 rounded-2xl shadow-lg card-hover" data-aos="fade-up"
+                        data-aos-delay="500">
+                        <div
+                            class="feature-icon w-16 h-16 gradient-primary rounded-2xl flex items-center justify-center mb-6 shadow-lg">
+                            <i class="fas fa-chart-bar text-white text-2xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-semibold mb-4">Analytics & Reporting</h3>
+                        <p class="text-gray-600 mb-6">Gain valuable insights into your business performance with
+                            comprehensive analytics and reports.</p>
+                        <ul class="space-y-2 text-sm text-gray-600">
+                            <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i>Revenue
+                                tracking</li>
+                            <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i>Member
+                                retention</li>
+                            <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i>Custom
+                                reports</li>
+                        </ul>
+                    </div>
+
+                    <div class="feature-card bg-white p-8 rounded-2xl shadow-lg card-hover" data-aos="fade-up"
+                        data-aos-delay="600">
+                        <div
+                            class="feature-icon w-16 h-16 gradient-primary rounded-2xl flex items-center justify-center mb-6 shadow-lg">
+                            <i class="fas fa-tools text-white text-2xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-semibold mb-4">Maintenance Logs</h3>
+                        <p class="text-gray-600 mb-6">Track equipment repairs, costs, and replacements across locations.
+                        </p>
+                        <ul class="space-y-2 text-sm text-gray-600">
+                            <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i>Repair
+                                history tracking</li>
+                            <li class="flex items-center"><i
+                                    class="fas fa-check-circle text-green-500 mr-2"></i>Maintenance
+                                cost management</li>
+                            <li class="flex items-center"><i
+                                    class="fas fa-check-circle text-green-500 mr-2"></i>Equipment
+                                replacement records</li>
+                        </ul>
+                    </div>
+
+                    <div class="feature-card bg-white p-8 rounded-2xl shadow-lg card-hover" data-aos="fade-up"
+                        data-aos-delay="600">
+                        <div
+                            class="feature-icon w-16 h-16 gradient-primary rounded-2xl flex items-center justify-center mb-6 shadow-lg">
+                            <i class="fas fa-code-branch text-white text-2xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-semibold mb-4">Branch Selection</h3>
+                        <p class="text-gray-600 mb-6">Select branches and track branch-wise metrics in one click.</p>
+                        <ul class="space-y-2 text-sm text-gray-600">
+                            <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i>Quick
+                                branch switching</li>
+                            <li class="flex items-center"><i
+                                    class="fas fa-check-circle text-green-500 mr-2"></i>Branch-wise
+                                performance metrics</li>
+                            <li class="flex items-center"><i
+                                    class="fas fa-check-circle text-green-500 mr-2"></i>Multi-location management</li>
+                        </ul>
+                    </div>
+                    <!-- Inventory & Stock -->
+                    <div class="feature-card bg-white p-8 rounded-2xl shadow-lg card-hover" data-aos="fade-up"
+                        data-aos-delay="200">
+                        <div
+                            class="feature-icon w-16 h-16 gradient-primary rounded-2xl flex items-center justify-center mb-6 shadow-lg">
+                            <i class="fas fa-boxes text-white text-2xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-semibold mb-4">Inventory & Stock</h3>
+                        <p class="text-gray-600 mb-6">Manage equipment categories, vendors, and inventory with ease.</p>
+                        <ul class="space-y-2 text-sm text-gray-600">
+                            <li class="flex items-center"><i
+                                    class="fas fa-check-circle text-green-500 mr-2"></i>Equipment &
+                                category management</li>
+                            <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i>Vendor
+                                tracking</li>
+                            <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i>Stock
+                                level
+                                monitoring</li>
+                        </ul>
+                    </div>
+
+                    <!-- Accounts Tracking -->
+                    <div class="feature-card bg-white p-8 rounded-2xl shadow-lg card-hover" data-aos="fade-up"
+                        data-aos-delay="400">
+                        <div
+                            class="feature-icon w-16 h-16 gradient-primary rounded-2xl flex items-center justify-center mb-6 shadow-lg">
+                            <i class="fas fa-file-invoice-dollar text-white text-2xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-semibold mb-4">Accounts Tracking</h3>
+                        <p class="text-gray-600 mb-6">Handle incomes, expenses, and export reports in a single
+                            dashboard.
+                        </p>
+                        <ul class="space-y-2 text-sm text-gray-600">
+                            <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i>Income
+                                &
+                                expense tracking</li>
+                            <li class="flex items-center"><i
+                                    class="fas fa-check-circle text-green-500 mr-2"></i>Automated
+                                financial reports</li>
+                            <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i>Export
+                                in
+                                multiple formats</li>
+                        </ul>
+                    </div>
+
+                    <!-- Templates & Notifications -->
+                    <div class="feature-card bg-white p-8 rounded-2xl shadow-lg card-hover" data-aos="fade-up"
+                        data-aos-delay="600">
+                        <div
+                            class="feature-icon w-16 h-16 gradient-primary rounded-2xl flex items-center justify-center mb-6 shadow-lg">
+                            <i class="fas fa-bell text-white text-2xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-semibold mb-4">Templates & Notifications</h3>
+                        <p class="text-gray-600 mb-6">Customize WhatsApp and email templates to alert your members
+                            instantly.</p>
+                        <ul class="space-y-2 text-sm text-gray-600">
+                            <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i>Custom
+                                WhatsApp templates</li>
+                            <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i>Email
+                                notification setup</li>
+                            <li class="flex items-center"><i
+                                    class="fas fa-check-circle text-green-500 mr-2"></i>Automated
+                                alerts & reminders</li>
+                        </ul>
+                    </div>
+
+                    <!-- Lead Management -->
+                    <div class="feature-card bg-white p-8 rounded-2xl shadow-lg card-hover" data-aos="fade-up"
+                        data-aos-delay="200">
+                        <div
+                            class="feature-icon w-16 h-16 gradient-primary rounded-2xl flex items-center justify-center mb-6 shadow-lg">
+                            <i class="fas fa-user-plus text-white text-2xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-semibold mb-4">Lead Management</h3>
+                        <p class="text-gray-600 mb-6">Capture, track, and convert leads seamlessly with built-in CRM
+                            tools.
+                        </p>
+                        <ul class="space-y-2 text-sm text-gray-600">
+                            <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i>Lead
+                                capture & tracking</li>
+                            <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i>Status
+                                &
+                                priority updates</li>
+                            <li class="flex items-center"><i
+                                    class="fas fa-check-circle text-green-500 mr-2"></i>Follow-up
+                                reminders</li>
+                        </ul>
+                    </div>
+
+                    <!-- Birthday Wishes -->
+                    <div class="feature-card bg-white p-8 rounded-2xl shadow-lg card-hover" data-aos="fade-up"
+                        data-aos-delay="400">
+                        <div
+                            class="feature-icon w-16 h-16 gradient-primary rounded-2xl flex items-center justify-center mb-6 shadow-lg">
+                            <i class="fas fa-birthday-cake text-white text-2xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-semibold mb-4">Birthday Wishes</h3>
+                        <p class="text-gray-600 mb-6">Send personalized birthday greetings and strengthen member
+                            relationships.</p>
+                        <ul class="space-y-2 text-sm text-gray-600">
+                            <li class="flex items-center"><i
+                                    class="fas fa-check-circle text-green-500 mr-2"></i>Automated
+                                birthday reminders</li>
+                            <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i>Custom
+                                WhatsApp & email messages</li>
+                            <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i>Boost
+                                member engagement</li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section id="web-services" class="py-16 lg:py-24 bg-gray-50">
+            <div class="container mx-auto px-4 sm:px-6">
+                <div class="text-center max-w-3xl mx-auto mb-12 lg:mb-16" data-aos="fade-up">
+                    <h2 class="text-3xl sm:text-4xl lg:text-5xl font-display font-bold mb-4 lg:mb-6">
+                        Web Development <span class="gradient-text-secondary">Services</span>
+                    </h2>
+                    <p class="text-lg sm:text-xl text-gray-600">
+                        Professional websites and web applications tailored to your fitness business
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+                    <div data-aos="fade-right">
+                        <div class="bg-white rounded-3xl shadow-xl overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                                alt="Web Development" class="w-full h-48 sm:h-64 object-cover">
+                            <div class="p-6 lg:p-8">
+                                <h3 class="text-xl lg:text-2xl font-bold mb-3 lg:mb-4">Custom Website Development</h3>
+                                <p class="text-gray-600 mb-4 lg:mb-6 text-sm lg:text-base">
+                                    We create stunning, responsive websites that capture your brand's essence and
+                                    convert
+                                    visitors into members. Our designs are optimized for performance, SEO, and user
+                                    experience.
+                                </p>
+                                <ul class="space-y-2 lg:space-y-3 mb-4 lg:mb-6 text-sm lg:text-base">
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check-circle text-blue-500 mt-1 mr-2 lg:mr-3"></i>
+                                        <span>Responsive design for all devices</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check-circle text-blue-500 mt-1 mr-2 lg:mr-3"></i>
+                                        <span>SEO optimized structure</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check-circle text-blue-500 mt-1 mr-2 lg:mr-3"></i>
+                                        <span>Fast loading performance</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check-circle text-blue-500 mt-1 mr-2 lg:mr-3"></i>
+                                        <span>Content management integration</span>
+                                    </li>
+                                </ul>
+                                <button
+                                    class="btn-secondary text-white px-4 py-2 lg:px-6 lg:py-3 rounded-lg font-semibold hover:shadow-lg w-full sm:w-auto">
+                                    <a href="#contact"> Order Now</a>
+                                   
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div data-aos="fade-left">
+                        <div class="space-y-6 lg:space-y-8">
+                            <div
+                                class="bg-white p-4 lg:p-6 rounded-2xl shadow-md hover:shadow-xl transition-shadow duration-300 cursor-pointer">
+                                <div class="flex items-center space-x-4">
+                                    <div
+                                        class="w-12 h-12 lg:w-16 lg:h-16 flex-shrink-0 rounded-lg bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center text-white text-xl lg:text-2xl">
+                                        <i class="fas fa-laptop-code"></i>
+                                    </div>
+
+                                    <div class="flex-1">
+                                        <h3 class="text-base lg:text-lg font-semibold text-gray-900 mb-1">
+                                            Trendy Websites, Tailored for You
+                                        </h3>
+                                        <p class="text-gray-500 text-xs lg:text-sm leading-relaxed">
+                                            We specialize in crafting cutting-edge websites that not only meet but
+                                            exceed
+                                            your unique requirements. By blending innovative design trends with
+                                            user-centric
+                                            functionality, we ensure your online presence stands out in today's
+                                            competitive
+                                            digital landscape.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div
+                                class="bg-white p-6 rounded-2xl  shadow-md hover:shadow-xl transition-shadow duration-300 cursor-pointer">
+                                <div class="flex items-center space-x-4">
+                                    <!-- Icon Section -->
+                                    <div
+                                        class="w-16 h-16 flex-shrink-0 rounded-lg bg-gradient-to-br from-green-400 to-teal-500 flex items-center justify-center text-white text-2xl">
+                                        <i class="fas fa-calendar-check"></i>
+                                    </div>
+
+                                    <!-- Content Section -->
+                                    <div class="flex-1">
+                                        <h3 class="text-lg font-semibold text-gray-900 mb-1">
+                                            Booking Systems & Integrations
+                                        </h3>
+                                        <p class="text-gray-500 text-sm leading-relaxed">
+                                            Custom booking solutions for classes, personal training, and facility
+                                            reservations.
+                                            We also provide seamless WhatsApp and email integrations to keep your
+                                            clients
+                                            connected.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="bg-white p-8 rounded-3xl shadow-lg card-hover">
+                                <div class="flex items-start">
+                                    <div
+                                        class="w-14 h-14 gradient-secondary rounded-xl flex items-center justify-center mr-5 flex-shrink-0">
+                                        <i class="fas fa-layer-group text-white text-xl"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="text-xl font-bold mb-2">Custom Templates Design</h4>
+                                        <p class="text-gray-600">Design and customize professional templates for
+                                            websites,
+                                            emails, and documents to match your brand identity.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="bg-white p-8 rounded-3xl shadow-lg card-hover">
+                                <div class="flex items-start">
+                                    <div
+                                        class="w-14 h-14 gradient-secondary rounded-xl flex items-center justify-center mr-5 flex-shrink-0">
+                                        <i class="fas fa-tools text-white text-xl"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="text-xl font-bold mb-2">Maintenance & Support</h4>
+                                        <p class="text-gray-600">Ongoing website maintenance, security updates, and
+                                            technical support.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="portfolio" class="py-16 lg:py-24 bg-white">
+            <div class="container mx-auto px-4 sm:px-6">
+                <div class="text-center max-w-3xl mx-auto mb-12 lg:mb-16" data-aos="fade-up">
+                    <h2 class="text-3xl sm:text-4xl lg:text-5xl font-display font-bold mb-4 lg:mb-6">
+                        Our <span class="gradient-text-primary">Portfolio</span>
+                    </h2>
+                    <p class="text-lg sm:text-xl text-gray-600">
+                        Websites and solutions we've created for fitness businesses
+                    </p>
+                </div>
+
+                <div class="flex justify-center mb-8 lg:mb-12" data-aos="fade-up">
+                    <div class="inline-flex flex-col sm:flex-row bg-gray-100 rounded-lg p-1 w-full sm:w-auto">
+                        <button
+                            class="tab-active px-4 py-2 sm:px-6 sm:py-3 rounded-md font-medium transition text-sm sm:text-base"
+                            onclick="filterPortfolio('all')">All</button>
+                        <button
+                            class="px-4 py-2 sm:px-6 sm:py-3 rounded-md font-medium text-gray-600 hover:text-primary transition text-sm sm:text-base"
+                            onclick="filterPortfolio('gym')">Gym Websites</button>
+                        <button
+                            class="px-4 py-2 sm:px-6 sm:py-3 rounded-md font-medium text-gray-600 hover:text-primary transition text-sm sm:text-base"
+                            onclick="filterPortfolio('studio')">Studios</button>
+                        <button
+                            class="px-4 py-2 sm:px-6 sm:py-3 rounded-md font-medium text-gray-600 hover:text-primary transition text-sm sm:text-base"
+                            onclick="filterPortfolio('trainer')">Trainers</button>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8" id="portfolio-grid">
+                    <div class="portfolio-item rounded-2xl overflow-hidden shadow-lg" data-aos="fade-up"
+                        data-aos-delay="100" data-category="gym">
+                        <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                            alt="PowerFit Gym" class="w-full h-48 sm:h-64 object-cover">
+                        <div class="portfolio-overlay">
+                            <div class="text-center text-white p-4 lg:p-6">
+                                <h3 class="text-xl lg:text-2xl font-bold mb-2">PowerFit Gym</h3>
+                                <p class="mb-4 text-sm lg:text-base">Modern gym website with integrated management
+                                    system</p>
+                                <button
+                                    class="btn-primary text-white px-3 py-2 rounded-lg font-semibold text-sm lg:text-base">
+                                    <a href="./websites/powerfit.html" class="text-primary" target="_blank">View Project</a>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="portfolio-item rounded-2xl overflow-hidden shadow-lg" data-aos="fade-up"
+                        data-aos-delay="200" data-category="studio">
+                        <img src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/18/e5/43/5d/ra-bamboo-shala.jpg?w=900&h=500&s=1"
+                            alt="Yoga Bliss Studio" class="w-full h-64 object-cover">
+                        <div class="portfolio-overlay">
+                            <div class="text-center text-white p-6">
+                                <h3 class="text-2xl font-bold mb-2">Yoga Bliss Studio</h3>
+                                <p class="mb-4">Serene yoga studio website with class booking system</p>
+                                <button class="btn-primary text-white px-3 py-2 rounded-lg font-semibold">
+                                    <a href="./websites/yoga.html" class="text-primary" target="_blank">View Project</a>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="portfolio-item rounded-2xl overflow-hidden shadow-lg" data-aos="fade-up"
+                        data-aos-delay="300" data-category="trainer">
+                        
+                            <img src="https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                            alt="Mike Johnson Fitness" class="w-full h-64 object-cover">
+                        <div class="portfolio-overlay">
+                            <div class="text-center text-white p-6">
+                                <h3 class="text-2xl font-bold mb-2">Mike Johnson Fitness</h3>
+                                <p class="mb-4">Personal trainer website with client management</p>
+                                <button class="btn-primary text-white px-3 py-2 rounded-lg font-semibold">
+                                    <a href="./websites/johmson.html" class="text-primary" target="_blank">View Project</a>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="portfolio-item rounded-2xl overflow-hidden shadow-lg" data-aos="fade-up"
+                        data-aos-delay="400" data-category="gym">
+                        <img src="https://www.primalstrength.com/cdn/shop/articles/fitness-studio-46-2.jpg?v=1682607893"
+                            alt="IronCore Fitness" class="w-full h-64 object-cover">
+                        <div class="portfolio-overlay">
+                            <div class="text-center text-white p-6">
+                                <h3 class="text-2xl font-bold mb-2">IronCore Fitness</h3>
+                                <p class="mb-4">CrossFit gym with membership management</p>
+                                <button class="btn-primary text-white px-3 py-2 rounded-lg font-semibold">
+                                    <a href="./websites/ironcore.html" class="text-primary" target="_blank">View Project</a>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="portfolio-item rounded-2xl overflow-hidden shadow-lg" data-aos="fade-up"
+                        data-aos-delay="500" data-category="studio">
+                        <img src="https://images.unsplash.com/photo-1599901860904-17e6ed7083a0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                            alt="Dance Dynamics" class="w-full h-64 object-cover">
+                        <div class="portfolio-overlay">
+                            <div class="text-center text-white p-6">
+                                <h3 class="text-2xl font-bold mb-2">Dance Dynamics</h3>
+                                <p class="mb-4">Dance studio website with class schedules</p>
+                                <button class="btn-primary text-white px-3 py-2 rounded-lg font-semibold">
+                                    <a href="./websites/dance.html" class="text-primary" target="_blank">View Project</a>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="portfolio-item rounded-2xl overflow-hidden shadow-lg" data-aos="fade-up"
+                        data-aos-delay="600" data-category="trainer">
+                        <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                            alt="Sarah's Pilates" class="w-full h-64 object-cover">
+                        
+                        <div class="portfolio-overlay">
+                            <div class="text-center text-white p-6">
+                                <h3 class="text-2xl font-bold mb-2">Sarah's Pilates</h3>
+                                <p class="mb-4">Pilates instructor website with booking system</p>
+                                <button class="btn-primary text-white px-3 py-2 rounded-lg font-semibold">
+                                    <a href="./websites/sarah.html" class="text-primary" target="_blank">View Project</a>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </section>
+
+        <section class="py-16 lg:py-24 bg-gray-50">
+            <div class="container mx-auto px-4 sm:px-6">
+                <div class="text-center max-w-3xl mx-auto mb-12 lg:mb-16" data-aos="fade-up">
+                    <h2 class="text-3xl sm:text-4xl lg:text-5xl font-display font-bold mb-4 lg:mb-6">
+                        Client <span class="gradient-text-primary">Testimonials</span>
+                    </h2>
+                    <p class="text-lg sm:text-xl text-gray-600">
+                        Hear from fitness business owners who have transformed their operations
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+                    <div class="bg-white p-6 lg:p-8 rounded-3xl shadow-lg" data-aos="fade-up" data-aos-delay="100">
+                        <div class="flex items-center mb-4 lg:mb-6">
+                            <img src="https://intowellness.in/wp-content/uploads/2024/10/All_in_one_exercise_machine_for_home_and_gym.jpg"
+                                alt="Sachin kumar"
+                                class="w-12 h-12 lg:w-16 lg:h-16 rounded-full mr-3 lg:mr-4 ring-4 ring-orange-100">
+                            <div>
+                                <h4 class="font-bold text-base lg:text-lg">Sachin kumar</h4>
+                                <p class="text-gray-600 text-xs lg:text-sm">Owner, Red Rock gym</p>
+                            </div>
+                        </div>
+                        <div class="flex mb-3 lg:mb-4">
+                            <i class="fas fa-star text-yellow-400 text-sm lg:text-base"></i>
+                            <i class="fas fa-star text-yellow-400 text-sm lg:text-base"></i>
+                            <i class="fas fa-star text-yellow-400 text-sm lg:text-base"></i>
+                            <i class="fas fa-star text-yellow-400 text-sm lg:text-base"></i>
+                            <i class="fas fa-star text-yellow-400 text-sm lg:text-base"></i>
+                        </div>
+                        <p class="text-gray-700 italic text-sm lg:text-base">
+                            "Unimanage gym management software has revolutionized how we run our business. The time
+                            saved on
+                            administrative tasks allows us to focus more on our members."
+                        </p>
+                    </div>
+                    <div class="bg-white p-6 lg:p-8 rounded-3xl shadow-lg" data-aos="fade-up" data-aos-delay="100">
+                        <div class="flex items-center mb-4 lg:mb-6">
+                            <img src="./Alphatitan.jpeg"
+                                alt="Ashwani Lamba"
+                                class="w-12 h-12 lg:w-16 lg:h-16 rounded-full mr-3 lg:mr-4 ring-4 ring-orange-100">
+                            <div>
+                                <h4 class="font-bold text-base lg:text-lg">Sagar Diwans</h4>
+                                <p class="text-gray-600 text-xs lg:text-sm">Owner, Alpha Titan Gym</p>
+                            </div>
+                        </div>
+                        <div class="flex mb-3 lg:mb-4">
+                            <i class="fas fa-star text-yellow-400 text-sm lg:text-base"></i>
+                            <i class="fas fa-star text-yellow-400 text-sm lg:text-base"></i>
+                            <i class="fas fa-star text-yellow-400 text-sm lg:text-base"></i>
+                            <i class="fas fa-star text-yellow-400 text-sm lg:text-base"></i>
+                            <i class="fas fa-star text-yellow-400 text-sm lg:text-base"></i>
+                        </div>
+                        <p class="text-gray-700 italic text-sm lg:text-base">
+                            “Unimanage has completely streamlined our gym operations. From scheduling to member
+                            management, everything is effortless. The support team is excellent.”
+                        </p>
+                    </div>
+                    <div class="bg-white p-6 lg:p-8 rounded-3xl shadow-lg" data-aos="fade-up" data-aos-delay="100">
+                        <div class="flex items-center mb-4 lg:mb-6">
+                            <img src="https://i.pinimg.com/236x/ca/6f/39/ca6f39c16cf0518cbe808b0e8d1623e9.jpg"
+                                alt="vipin soni"
+                                class="w-12 h-12 lg:w-16 lg:h-16 rounded-full mr-3 lg:mr-4 ring-4 ring-orange-100">
+                            <div>
+                                <h4 class="font-bold text-base lg:text-lg">Ashwani Lamba</h4>
+                                <p class="text-gray-600 text-xs lg:text-sm">Owner, Cosmo Fitness</p>
+                            </div>
+                        </div>
+                        <div class="flex mb-3 lg:mb-4">
+                            <i class="fas fa-star text-yellow-400 text-sm lg:text-base"></i>
+                            <i class="fas fa-star text-yellow-400 text-sm lg:text-base"></i>
+                            <i class="fas fa-star text-yellow-400 text-sm lg:text-base"></i>
+                            <i class="fas fa-star text-yellow-400 text-sm lg:text-base"></i>
+                            <i class="fas fa-star text-yellow-400 text-sm lg:text-base"></i>
+                        </div>
+                        <p class="text-gray-700 italic text-sm lg:text-base">
+                            “Unimanage gym management software makes our daily operations simple and efficient. It saves
+                            time, reduces errors, and helps us keep everything organized in one place.”
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section id="pricing" class="py-16 lg:py-24 bg-white">
+            <div class="container mx-auto px-4 sm:px-6">
+                <div class="text-center max-w-3xl mx-auto mb-12 lg:mb-16" data-aos="fade-up">
+                    <h2 class="text-3xl sm:text-4xl lg:text-5xl font-display font-bold mb-4 lg:mb-6">
+                        Simple <span class="gradient-text-primary">Pricing</span> Plans
+                    </h2>
+                    <p class="text-lg sm:text-xl text-gray-600">
+                        Choose the perfect plan for your fitness business
+                    </p>
+                </div>
+
+                <div class="flex justify-center mb-8 lg:mb-12" data-aos="fade-up">
+                    <div class="inline-flex flex-col sm:flex-row bg-gray-100 rounded-lg p-1 w-full sm:w-auto">
+                        <button
+                            class="tab-active px-4 py-2 sm:px-6 sm:py-3 rounded-md font-medium transition text-sm sm:text-base"
+                            onclick="switchPricing('monthly')">Monthly</button>
+                        <button
+                            class="px-4 py-2 sm:px-6 sm:py-3 rounded-md font-medium text-gray-600 hover:text-primary transition text-sm sm:text-base"
+                            onclick="switchPricing('annual')">Annual (Save 20%)</button>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 max-w-6xl mx-auto">
+                    <div class="bg-white p-6 lg:p-8 rounded-3xl shadow-xl border border-gray-100" data-aos="fade-up"
+                        data-aos-delay="100">
+                        <h3 class="text-xl lg:text-2xl font-bold mb-2">Starter</h3>
+                        <p class="text-gray-600 mb-4 lg:mb-6 text-sm lg:text-base">For small gyms & trainers</p>
+                        <div class="mb-4 lg:mb-6">
+                            <span class="text-4xl lg:text-5xl font-bold monthly-price">₹800</span>
+                            <span class="text-4xl lg:text-5xl font-bold annual-price hidden">₹499</span>
+                            <span class="text-gray-600">/month</span>
+                        </div>
+                        <ul class="space-y-2 lg:space-y-3 mb-6 lg:mb-8 text-sm lg:text-base">
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 mr-2 lg:mr-3 text-sm"></i>
+                                <span>Up to 100 members</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 mr-2 lg:mr-3 text-sm"></i>
+                                <span>Basic management features</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 mr-2 lg:mr-3 text-sm"></i>
+                                <span>Standard website template</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 mr-2 lg:mr-3 text-sm"></i>
+                                <span>Email support</span>
+                            </li>
+                        </ul>
+                        <button
+                            class="w-full bg-gray-100 text-gray-800 py-3 rounded-xl font-semibold hover:bg-gray-200 transition text-sm lg:text-base">
+                            Get Started
+                        </button>
+                    </div>
+                    <div class="bg-white p-6 lg:p-8 rounded-3xl shadow-xl border border-gray-100 relative"
+                        data-aos="fade-up" data-aos-delay="100">
+                        <!-- Fixed MOST POPULAR badge with responsive styling -->
+                        <div class="popular-badge">
+                            MOST POPULAR
+                        </div>
+                        <h3 class="text-2xl font-bold mb-2">Professional</h3>
+                        <p class="text-gray-600 mb-6">For growing fitness businesses</p>
+                        <div class="mb-6">
+                            <span class="text-5xl font-bold monthly-price">₹1499</span>
+                            <span class="text-5xl font-bold annual-price hidden">₹1000</span>
+                            <span class="text-gray-600 mb-6">/month</span>
+                        </div>
+                        <ul class="space-y-3 mb-8">
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 mr-3"></i>
+                                <span>Up to 500 members</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 mr-3"></i>
+                                <span>Advanced management features</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 mr-3"></i>
+                                <span>Custom website design</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 mr-3"></i>
+                                <span>Priority support</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 mr-3"></i>
+                                <span>Mobile app included</span>
+                            </li>
+                        </ul>
+                        <button
+                            class="w-full bg-gray-100 text-gray-800 py-3 rounded-xl font-semibold hover:bg-gray-200 transition text-sm lg:text-base">
+                            Get Started
+                        </button>
+                    </div>
+
+                    <div class="bg-white p-8 rounded-3xl shadow-xl border border-gray-100" data-aos="fade-up"
+                        data-aos-delay="300">
+                        <h3 class="text-2xl font-bold mb-2">Enterprise</h3>
+                        <p class="text-gray-600 mb-6">For large fitness chains</p>
+                        <div class="mb-6">
+                            <span class="text-5xl font-bold">Custom</span>
+                        </div>
+                        <ul class="space-y-3 mb-8">
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 mr-3"></i>
+                                <span>Unlimited members</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 mr-3"></i>
+                                <span>All features + custom modules</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 mr-3"></i>
+                                <span>Custom web development</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 mr-3"></i>
+                                <span>Dedicated account manager</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 mr-3"></i>
+                                <span>White-label solutions</span>
+                            </li>
+                        </ul>
+                        <button
+                            class="w-full bg-gray-100 text-gray-800 py-3 rounded-xl font-semibold hover:bg-gray-200 transition text-sm lg:text-base">
+                            Get Started
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section class="py-16 lg:py-24 gradient-primary text-white relative overflow-hidden">
+            <div class="absolute inset-0 bg-black opacity-10"></div>
+            <div class="container mx-auto px-4 sm:px-6 relative z-10">
+                <div class="max-w-4xl mx-auto text-center" data-aos="fade-up">
+                    <h2 class="text-3xl sm:text-4xl lg:text-5xl font-display font-bold mb-4 lg:mb-6">
+                        Ready to Transform Your Fitness Business?
+                    </h2>
+                    <p class="text-lg sm:text-xl text-orange-100 mb-6 lg:mb-8 max-w-2xl mx-auto">
+                        Join hundreds of fitness businesses that have grown with our management software and web
+                        services
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                        <button
+                            class="bg-white text-orange-600 px-6 py-3 lg:px-8 lg:py-4 rounded-xl font-semibold text-lg hover:bg-gray-100 transition shadow-xl">
+                            <i class="fas fa-calendar-check mr-2"></i>
+                            <a href="#contact">Schedule a Demo</a>
+                        </button>
+                        <button
+                            class="bg-transparent border-2 border-white text-white px-6 py-3 lg:px-8 lg:py-4 rounded-xl font-semibold text-lg hover:bg-white hover:text-orange-600 transition">
+                            <i class="fas fa-phone-alt mr-2" style="transform: scaleX(-1)"></i>
+                            <a href="#contact">Contact Sales</a>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="py-16 lg:py-24 bg-gray-50">
+            <div class="container mx-auto px-4 sm:px-6">
+                <div class="text-center max-w-3xl mx-auto mb-12 lg:mb-16" data-aos="fade-up">
+                    <h2 class="text-3xl sm:text-4xl lg:text-5xl font-display font-bold mb-4 lg:mb-6">
+                        Get In <span class="gradient-text-primary">Touch</span>
+                    </h2>
+                    <p class="text-lg sm:text-xl text-gray-600">
+                        Have questions? We'd love to hear from you.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 max-w-6xl mx-auto">
+                    <div data-aos="fade-right">
+                        <div class="bg-white p-6 lg:p-8 rounded-3xl shadow-lg h-full">
+                            <h3 class="text-xl lg:text-2xl font-bold mb-4 lg:mb-6">Contact Information</h3>
+
+                            <div class="space-y-4 lg:space-y-6">
+                                <div class="flex items-start">
+                                    <div
+                                        class="w-10 h-10 lg:w-12 lg:h-12 gradient-primary rounded-xl flex items-center justify-center mr-3 lg:mr-4 flex-shrink-0">
+                                        <i class="fas fa-map-marker-alt text-white text-sm lg:text-base"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold mb-1 text-sm lg:text-base">Our Location</h4>
+                                        <p class="text-gray-600 text-sm">M-3, Gali No. 7, Mamura, Sector 66, Noida,
+                                            Uttar Pradesh, 201301</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start">
+                                    <div
+                                        class="w-12 h-12 gradient-primary rounded-xl flex items-center justify-center mr-4 flex-shrink-0">
+                                        <i class="fas fa-phone-alt text-white" style="transform: scaleX(-1);"></i>
+
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold mb-1">Phone Number</h4>
+                                        <p class="text-gray-600">+91 9205807124</p>
+                                    </div>
+                                </div>
+
+                                <div class="flex items-start">
+                                    <div
+                                        class="w-12 h-12 gradient-primary rounded-xl flex items-center justify-center mr-4 flex-shrink-0">
+                                        <i class="fas fa-envelope text-white"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold mb-1">Email Address</h4>
+                                        <p class="text-gray-600">support@unimanage.tech</p>
+                                    </div>
+                                </div>
+
+                                <div class="flex items-start">
+                                    <div
+                                        class="w-12 h-12 gradient-primary rounded-xl flex items-center justify-center mr-4 flex-shrink-0">
+                                        <i class="fas fa-clock text-white"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold mb-1">Business Hours</h4>
+                                        <p class="text-gray-600">Monday - Friday: 9am - 6pm<br>Saturday: 10am - 4pm</p>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="mt-6 lg:mt-8">
+                                <h4 class="font-bold mb-3 lg:mb-4 text-sm lg:text-base">Follow Us</h4>
+                                <div class="flex space-x-3 lg:space-x-4">
+                                    <a href="#"
+                                        class="w-10 h-10 lg:w-12 lg:h-12 bg-gray-100 rounded-full flex items-center justify-center hover:bg-orange-100 hover:text-orange-600 transition">
+                                        <i class="fab fa-facebook-f text-sm lg:text-base"></i>
+                                    </a>
+                                    <a href="#"
+                                        class="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center hover:bg-orange-100 hover:text-orange-600 transition">
+                                        <i class="fab fa-twitter"></i>
+                                    </a>
+                                    <a href="https://www.instagram.com/unimanage/?igsh=enB6ZmVpdDR5NTd0#"
+                                        class="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center hover:bg-orange-100 hover:text-orange-600 transition">
+                                        <i class="fab fa-instagram"></i>
+                                    </a>
+                                    <a href="#"
+                                        class="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center hover:bg-orange-100 hover:text-orange-600 transition">
+                                        <i class="fab fa-linkedin-in"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div data-aos="fade-left">
+                        <div class="bg-white p-6 lg:p-8 rounded-3xl shadow-lg">
+                            <h3 class="text-xl lg:text-2xl font-bold mb-4 lg:mb-6">Send Us a Message</h3>
+
+                            <!-- Form submission messages -->
+                            <div id="success-message" class="form-message success-message">
+                                <i class="fas fa-check-circle mr-2"></i>
+                                Thank you! Your message has been sent successfully.
+                            </div>
+                            <div id="error-message" class="form-message error-message">
+                                <i class="fas fa-exclamation-circle mr-2"></i>
+                                Oops! There was an error sending your message. Please try again.
+                            </div>
+
+                            <form id="contactForm" class="space-y-4 lg:space-y-6">
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6">
+                                    <div>
+                                        <label class="block text-gray-700 mb-2 text-sm lg:text-base">First Name</label>
+                                        <input type="text" name="firstName" required
+                                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent text-sm lg:text-base">
+                                    </div>
+                                    <div>
+                                        <label class="block text-gray-700 mb-2 text-sm lg:text-base">Last Name</label>
+                                        <input type="text" name="lastName" required
+                                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent text-sm lg:text-base">
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="block text-gray-700 mb-2">Email Address</label>
+                                    <input type="email" name="email" required
+                                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent">
+                                </div>
+
+                                <div>
+                                    <label class="block text-gray-700 mb-2">Subject</label>
+                                    <input type="text" name="subject" required
+                                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent">
+                                </div>
+
+                                <div>
+                                    <label class="block text-gray-700 mb-2">Message</label>
+                                    <textarea rows="4" name="message" required
+                                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"></textarea>
+                                </div>
+
+                                <button type="submit"
+                                    class="btn-primary text-white px-6 py-3 lg:px-8 lg:py-4 rounded-xl font-semibold text-lg hover:shadow-xl w-full">
+                                    Send Message
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="bg-gray-900 text-gray-300 py-12 lg:py-16">
+            <div class="container mx-auto px-4 sm:px-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 mb-8 lg:mb-12">
+                    <div data-aos="fade-up">
+                        <div class="flex items-center space-x-0 mb-4 lg:mb-6">
+                            <div class="w-10 h-10 lg:w-12 lg:h-12">
+                                <img src="./gymicon.png" alt="Unimanage Technologies">
+                            </div>
+
+                            <div>
+                                <span class="text-xl lg:text-2xl font-bold text-white">Unimanage</span>
+                                <p class="text-xs text-gray-400 -mt-1">Technologies</p>
+                            </div>
+                        </div>
+                        <p class="mb-4 lg:mb-6 text-gray-400 text-sm lg:text-base">
+                            Empowering fitness businesses with innovative management software and professional web
+                            development services.
+                        </p>
+                        <div class="flex space-x-3 lg:space-x-4">
+                            <a href="#"
+                                class="w-8 h-8 lg:w-10 lg:h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-orange-600 transition">
+                                <i class="fab fa-facebook-f text-sm"></i>
+                            </a>
+                            <a href="#"
+                                class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-orange-600 transition">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                            <a href="https://www.instagram.com/unimanage/?igsh=enB6ZmVpdDR5NTd0#"
+                                class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-orange-600 transition">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="#"
+                                class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-orange-600 transition">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div data-aos="fade-up" data-aos-delay="100">
+                        <h4 class="text-white font-semibold mb-6">Products</h4>
+                        <ul class="space-y-3">
+                            <li><a href="#" class="hover:text-white transition">Gym Management Software</a></li>
+                            <li><a href="#" class="hover:text-white transition">Web Development</a></li>
+                            <li><a href="#" class="hover:text-white transition">Mobile Apps</a></li>
+                            <li><a href="#" class="hover:text-white transition">Integrations</a></li>
+                        </ul>
+                    </div>
+
+                    <div data-aos="fade-up" data-aos-delay="200">
+                        <h4 class="text-white font-semibold mb-6">Company</h4>
+                        <ul class="space-y-3">
+                            <li><a href="#about" class="hover:text-white transition">About Us</a></li>
+                            <li><a href="#" class="hover:text-white transition">Careers</a></li>
+                            <li><a href="#" class="hover:text-white transition">Blog</a></li>
+                            <li><a href="#" class="hover:text-white transition">Partners</a></li>
+                        </ul>
+                    </div>
+
+                    <div data-aos="fade-up" data-aos-delay="300">
+                        <h4 class="text-white font-semibold mb-6">Support</h4>
+                        <ul class="space-y-3">
+                            <li><a href="#" class="hover:text-white transition">Help Center</a></li>
+                            <li><a href="#" class="hover:text-white transition">Documentation</a></li>
+                            <li><a href="#" class="hover:text-white transition">API Reference</a></li>
+                            <li><a href="#contact" class="hover:text-white transition">Contact Us</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div
+                    class="border-t border-gray-800 pt-6 lg:pt-8 flex flex-col md:flex-row justify-between items-center">
+                    <p class="text-gray-400 text-sm lg:text-base mb-4 md:mb-0">&copy; 2023 Unimanage Technologies. All
+                        rights reserved.</p>
+                    <div class="flex items-center space-x-4 lg:space-x-6">
+                        <a href="#" class="text-gray-400 hover:text-white transition text-sm lg:text-base">Privacy
+                            Policy</a>
+                        <a href="#" class="text-gray-400 hover:text-white transition text-sm lg:text-base">Terms of
+                            Service</a>
+                        <a href="#" class="text-gray-400 hover:text-white transition text-sm lg:text-base">Cookie
+                            Policy</a>
+                    </div>
+                </div>
+
+            </div>
+
+
+    </div>
+    </footer>
+
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/919205807124" target="_blank" class="whatsapp-float">
+        <i class="fab fa-whatsapp whatsapp-icon"></i>
+    </a>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 1000,
+            once: true,
+            offset: 100
+        });
+
+        // Mobile menu functionality
+        const openMenu = document.getElementById('openMenu');
+        const closeMenu = document.getElementById('closeMenu');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const overlay = document.getElementById('overlay');
+
+        openMenu.addEventListener('click', () => {
+            mobileMenu.classList.add('active');
+            overlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+
+        closeMenu.addEventListener('click', () => {
+            mobileMenu.classList.remove('active');
+            overlay.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+
+        overlay.addEventListener('click', () => {
+            mobileMenu.classList.remove('active');
+            overlay.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+
+        // Close menu when clicking on a link
+        const menuLinks = document.querySelectorAll('.mobile-menu a');
+        menuLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('active');
+                overlay.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Header scroll effect
+        window.addEventListener('scroll', function () {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.classList.add('shadow-md');
+            } else {
+                header.classList.remove('shadow-md');
+            }
+        });
+
+        // Portfolio filter
+        function filterPortfolio(category) {
+            const items = document.querySelectorAll('.portfolio-item');
+            const buttons = document.querySelectorAll('.inline-flex button');
+
+            // Update active button
+            buttons.forEach(btn => {
+                btn.classList.remove('tab-active');
+                btn.classList.add('text-gray-600');
+            });
+            event.target.classList.add('tab-active');
+            event.target.classList.remove('text-gray-600');
+
+            // Filter items
+            items.forEach(item => {
+                if (category === 'all' || item.dataset.category === category) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        // Pricing toggle
+        function switchPricing(period) {
+            const monthlyPrices = document.querySelectorAll('.monthly-price');
+            const annualPrices = document.querySelectorAll('.annual-price');
+            const buttons = document.querySelectorAll('.inline-flex button');
+
+            // Update active button
+            buttons.forEach(btn => {
+                btn.classList.remove('tab-active');
+                btn.classList.add('text-gray-600');
+            });
+            event.target.classList.add('tab-active');
+            event.target.classList.remove('text-gray-600');
+
+            // Toggle prices
+            if (period === 'monthly') {
+                monthlyPrices.forEach(price => price.classList.remove('hidden'));
+                annualPrices.forEach(price => price.classList.add('hidden'));
+            } else {
+                monthlyPrices.forEach(price => price.classList.add('hidden'));
+                annualPrices.forEach(price => price.classList.remove('hidden'));
+            }
+        }
+
+        // Contact form submission
+        document.getElementById('contactForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            // Get form data
+            const formData = new FormData(this);
+            const formObject = {};
+            formData.forEach((value, key) => {
+                formObject[key] = value;
+            });
+
+            // Show loading state
+            const submitButton = this.querySelector('button[type="submit"]');
+            const originalButtonText = submitButton.innerHTML;
+            submitButton.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Sending...';
+            submitButton.disabled = true;
+
+            // Simulate form submission (replace with actual form submission)
+            setTimeout(() => {
+                // Hide any existing messages
+                document.getElementById('success-message').style.display = 'none';
+                document.getElementById('error-message').style.display = 'none';
+
+                // Simulate successful submission (90% success rate for demo)
+                if (Math.random() > 0.1) {
+                    // Show success message
+                    document.getElementById('success-message').style.display = 'block';
+                    // Reset form
+                    this.reset();
+                } else {
+                    // Show error message
+                    document.getElementById('error-message').style.display = 'block';
+                }
+
+                // Reset button
+                submitButton.innerHTML = originalButtonText;
+                submitButton.disabled = false;
+
+                // Scroll to top of form to show message
+                this.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 1500);
+        });
+    </script>
+    </div>
+</body>
+
+</html>
